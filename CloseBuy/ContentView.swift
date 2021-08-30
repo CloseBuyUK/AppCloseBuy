@@ -8,9 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var authVM: AuthViewModel
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            switch authVM.authStatus {
+            case .signedIn(let user):
+                Text("Hello: \(user.userDetails.fullname)")
+            case .signedOut:
+                OnboardingView()
+            case .loading:
+                ProgressView()
+            }
+        }
     }
 }
 
